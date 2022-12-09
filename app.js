@@ -31,4 +31,4 @@ app.use('/',StatusRoute)
 app.use('/',LikeRoute)
 app.use('/',UnRegister)
 
-app.listen(4000, () => console.log('server connection...4000'))
+app.listen(2022, () => console.log('server connection...2022'))
