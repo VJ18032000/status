@@ -187,22 +187,43 @@ const editprofile=(req,res,next)=>{
         ...work_experience
 }
     User.updateMany({user_id},{$set:user})
-    .then(result=>{
-        const resdata={
-            "status": "OK",
-            "message": "profile details updated successfully",
-            "result": {result},
-            "error": {}
+    .then(result=>{  
+        if(result.modifiedCount){
+            const resdata={
+                "status": "OK",
+                "message": "profile details updated successfully",
+                "result": {},
+                "error": {}
+            }
+            res.send(resdata)
         }
-        res.send(resdata)
+        else if(result.acknowledged===false){
+            const resdata={
+                "status": "ERROR",
+                "message": "Something went wrong",
+                "result": {},
+                "error": "validation error"
+            }
+            res.send(resdata)
+        }
+        else{
+            const resdata={
+                "status": "OK",
+                "message": "Already exists!",
+                "result": {},
+                "error": {}
+            }
+            res.send(resdata)
+        }
+       
     }).catch(err=>{
         const resdata={
             "status": "ERROR",
             "message": "Something went wrong",
             "result": {},
-            "error": {err}
+            "error": "validation error"
         }
-        res.send(err)
+        res.send(resdata)
     })
 }
 
@@ -435,4 +456,4 @@ module.exports = {
     coverimage,
     database,
     deleteUser
-}
+} 
